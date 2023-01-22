@@ -45,7 +45,7 @@ class Deck {
     shuffle() {
         // write your code here
         for(let i=0;i<packArr.length;i++){
-        let j=Math.floor(Math.random() * packArr.length);
+        let j=Math.floor(Math.random() * (packArr.length+1));
          let temp=packArr[j]
          packArr[j]=packArr[i];
          packArr[i]=temp;
@@ -70,7 +70,7 @@ class Deck {
         // write your code here
     if(packArr.length==0)
      return true;
-     
+     else
      return false;
     } //End of isEmpty()
 
