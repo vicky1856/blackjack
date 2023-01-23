@@ -6,7 +6,7 @@
  function buildCards(asArray=true){
     const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
     const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
-    const packArr = ["Ace of Hearts","2 of Hearts","3 of Hearts","4 of Hearts","5 of Hearts","6 of Hearts","7 of Hearts","8 of Hearts","9 of Hearts","10 of Hearts","jack of Hearts","Queen of Hearts","King of Hearts","Ace of Diamonds","2 of Diamonds","3 of Diamonds","4 of Diamonds","5 of Diamonds","6 of Diamonds","7 of Diamonds","8 of Diamonds","9 of Diamonds","10 of Diamonds","Jack of Diamonds","Queen of Diamonds","King of Diamonds","Ace of Spades","2 of Spades","3 of Spades","4 of Spades","5 of Spades","6 of Spades","7 of Spades","8 of Spades","9 of Spades","10 of Spades","Jack of Spades","Queen of Spades","King of Spades","Ace of Clubs","2 of Clubs","3 of Clubs","4 of Clubs","5 of Clubs","6 of Clubs","7 of Clubs","8 of Clubs","9 of Clubs","10 of Clubs","Jack of Clubs","Queen of Clubs","King of Clubs"]
+    const packArr = ["Ace of Hearts","2 of Hearts","3 of Hearts","4 of Hearts","5 of Hearts","6 of Hearts","7 of Hearts","8 of Hearts","9 of Hearts","10 of Hearts","Jack of Hearts","Queen of Hearts","King of Hearts","Ace of Diamonds","2 of Diamonds","3 of Diamonds","4 of Diamonds","5 of Diamonds","6 of Diamonds","7 of Diamonds","8 of Diamonds","9 of Diamonds","10 of Diamonds","Jack of Diamonds","Queen of Diamonds","King of Diamonds","Ace of Spades","2 of Spades","3 of Spades","4 of Spades","5 of Spades","6 of Spades","7 of Spades","8 of Spades","9 of Spades","10 of Spades","Jack of Spades","Queen of Spades","King of Spades","Ace of Clubs","2 of Clubs","3 of Clubs","4 of Clubs","5 of Clubs","6 of Clubs","7 of Clubs","8 of Clubs","9 of Clubs","10 of Clubs","Jack of Clubs","Queen of Clubs","King of Clubs"]
     const packObj = {"Ace of Hearts": 1,"2 of Hearts": 2,"3 of Hearts": 3,"4 of Hearts": 4,"5 of Hearts": 5,"6 of Hearts": 6,"7 of Hearts": 7,"8 of Hearts": 8,"9 of Hearts": 9,"10 of Hearts": 10,"jack of Hearts": 11,"Queen of Hearts": 12,"King of Hearts": 13 , "Ace of Diamonds":1,"2 of Diamonds":2,"3 of Diamonds": 3,"4 of Diamonds": 4,"5 of Diamonds":5,"6 of Diamonds":6,"7 of Diamonds":7,"8 of Diamonds":8,"9 of Diamonds":9,"10 of Diamonds":10,"Jack of Diamonds":11,"Queen of Diamonds":12,"King of Diamonds":13, "Ace of Spades":1,"2 of Spades":2,"3 of Spades":3,"4 of Spades":4,"5 of Spades":5,"6 of Spades":6,"7 of Spades":7,"8 of Spades":8,"9 of Spades":9,"10 of Spades":10,"Jack of Spades":11,"Queen of Spades":12,"King of Spades":13,"Ace of Clubs":1,"2 of Clubs":2,"3 of Clubs":3,"4 of Clubs":4,"5 of Clubs":5,"6 of Clubs":6,"7 of Clubs":7,"8 of Clubs":8,"9 of Clubs":9,"10 of Clubs":10,"Jack of Clubs":11,"Queen of Clubs":12,"King of Clubs":13}
 
     // write your code here
@@ -35,7 +35,8 @@ class Deck {
      */
     reset() {
         // write your code here
-    return buildCards();
+        let bool=false;
+    return buildCards(true);
     } //End of reset()
 
 
@@ -70,7 +71,7 @@ class Deck {
         // write your code here
     if(packArr.length==0)
      return true;
-     else
+     
      return false;
     } //End of isEmpty()
 
@@ -157,19 +158,32 @@ function initialDeal() {
     // Deal(Instantiate) 2 Dealer cards and 2 Player cards
 
     // write your code here
-    card1=Deck.deal();
-    card2=Deck.deal();
-    playerCard1=Deck.deal();
-    playerCard2=Deck.deal();
+    card1=deck.deal();
+    card2=deck.deal();
+    playerCard1=deck.deal();
+    playerCard2=deck.deal();
 
     // Open the board with 2 Dealer cards (one Dealer card is closed) and 2 Player cards (both open)
 
     // write your code here
-
+    displayCard(playercard1,flipped=true);
+    displayCard(playercard1,flipped=true);
+    displayCard(card1,flipped=true);
+    displayCard(card2,flipped=false);
+    
 
     // Setting face card values to 10
 
     // write your code here
+    function value(pl){
+        let arr=p1.split(" ");
+        if( parseInt(arr[0]) )
+        return parseInt(p1);
+        else if((arr[0]=="Ace") || (arr[0]=="King") || (arr[1]=="Queen") || (arr[1]=="Jack")){
+            return 10;
+        }
+
+    }
 
 
     // Getting player cards total - show an alert only if there is a Blackjack
@@ -186,6 +200,17 @@ function initialDeal() {
         })
     */
 
+        if(value(playerCard1)+value(playerCard2)==21){
+            cuteAlert({
+                type: "success",
+                title: "Superb!!!",
+                message: "Blackjacked !!!",
+                buttonText: "Wohoo !!!",
+                img:"success.svg"
+            }).then(() => {
+                location.reload()  // Load a new game
+            })
+        }
     // write your code here
 
 } //End of deal()
@@ -195,9 +220,12 @@ function initialDeal() {
  */
 function stand() {
     // flip Dealer cards and compare
-
+    displayCard(card2,true);
     // write your code here
-
+    let dtotal=21-value(card1)+value(card2);
+    let ptotal=21-value(playerCard1)+value(playerCard2);
+    if(dtotal**2>ptotal**2)
+    return cuteAlert;
 
     // Checking Dealer and Player score - to give the result using cuteAlerts (just like the alert in initialDeal function)
 
