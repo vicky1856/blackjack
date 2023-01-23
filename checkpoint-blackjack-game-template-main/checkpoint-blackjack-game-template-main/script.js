@@ -222,10 +222,31 @@ function stand() {
     // flip Dealer cards and compare
     displayCard(card2,true);
     // write your code here
-    let dtotal=21-value(card1)+value(card2);
-    let ptotal=21-value(playerCard1)+value(playerCard2);
-    if(dtotal**2>ptotal**2)
-    return cuteAlert;
+    let dealerTotal=value(card1)+value(card2);
+    let playerTotal=value(playerCard1)+value(playerCard2);
+    if(dealerTotal>playerTotal)
+    {
+        cuteAlert({
+            type: "Failed",
+            title: "Ohhhh nooo!!",
+            message: "Busted!!!",
+            buttonText: "Play again !!!",
+            img:"error.svg"
+        }).then(() => {
+            location.reload()  // Load a new game
+        }) 
+    }
+    else{
+        cuteAlert({
+            type: "success",
+            title: "Superb!!!",
+            message: "Blackjacked !!!",
+            buttonText: "Wohoo !!!",
+            img:"success.svg"
+        }).then(() => {
+            location.reload()  // Load a new game
+        })
+    }
 
     // Checking Dealer and Player score - to give the result using cuteAlerts (just like the alert in initialDeal function)
 
@@ -245,7 +266,7 @@ function hit() {
     // Dealing the extra cards that the player requests
 
     // write your code here
-
+    
 
     // Dealing new cards 
     // Use conditional block
