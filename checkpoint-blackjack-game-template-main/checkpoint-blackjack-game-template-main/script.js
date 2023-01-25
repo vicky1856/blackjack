@@ -7,7 +7,7 @@
     const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
     const values = ['Ace', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'Jack', 'Queen', 'King'];
     const packArr = ["Ace of Hearts","2 of Hearts","3 of Hearts","4 of Hearts","5 of Hearts","6 of Hearts","7 of Hearts","8 of Hearts","9 of Hearts","10 of Hearts","Jack of Hearts","Queen of Hearts","King of Hearts","Ace of Diamonds","2 of Diamonds","3 of Diamonds","4 of Diamonds","5 of Diamonds","6 of Diamonds","7 of Diamonds","8 of Diamonds","9 of Diamonds","10 of Diamonds","Jack of Diamonds","Queen of Diamonds","King of Diamonds","Ace of Spades","2 of Spades","3 of Spades","4 of Spades","5 of Spades","6 of Spades","7 of Spades","8 of Spades","9 of Spades","10 of Spades","Jack of Spades","Queen of Spades","King of Spades","Ace of Clubs","2 of Clubs","3 of Clubs","4 of Clubs","5 of Clubs","6 of Clubs","7 of Clubs","8 of Clubs","9 of Clubs","10 of Clubs","Jack of Clubs","Queen of Clubs","King of Clubs"]
-    const packObj = {"Ace of Hearts": 1,"2 of Hearts": 2,"3 of Hearts": 3,"4 of Hearts": 4,"5 of Hearts": 5,"6 of Hearts": 6,"7 of Hearts": 7,"8 of Hearts": 8,"9 of Hearts": 9,"10 of Hearts": 10,"jack of Hearts": 11,"Queen of Hearts": 12,"King of Hearts": 13 , "Ace of Diamonds":1,"2 of Diamonds":2,"3 of Diamonds": 3,"4 of Diamonds": 4,"5 of Diamonds":5,"6 of Diamonds":6,"7 of Diamonds":7,"8 of Diamonds":8,"9 of Diamonds":9,"10 of Diamonds":10,"Jack of Diamonds":11,"Queen of Diamonds":12,"King of Diamonds":13, "Ace of Spades":1,"2 of Spades":2,"3 of Spades":3,"4 of Spades":4,"5 of Spades":5,"6 of Spades":6,"7 of Spades":7,"8 of Spades":8,"9 of Spades":9,"10 of Spades":10,"Jack of Spades":11,"Queen of Spades":12,"King of Spades":13,"Ace of Clubs":1,"2 of Clubs":2,"3 of Clubs":3,"4 of Clubs":4,"5 of Clubs":5,"6 of Clubs":6,"7 of Clubs":7,"8 of Clubs":8,"9 of Clubs":9,"10 of Clubs":10,"Jack of Clubs":11,"Queen of Clubs":12,"King of Clubs":13}
+    const packObj = {"Ace of Hearts": 1,"2 of Hearts": 2,"3 of Hearts": 3,"4 of Hearts": 4,"5 of Hearts": 5,"6 of Hearts": 6,"7 of Hearts": 7,"8 of Hearts": 8,"9 of Hearts": 9,"10 of Hearts": 10,"jack of Hearts": 10,"Queen of Hearts": 10,"King of Hearts": 10 , "Ace of Diamonds":1,"2 of Diamonds":2,"3 of Diamonds": 3,"4 of Diamonds": 4,"5 of Diamonds":5,"6 of Diamonds":6,"7 of Diamonds":7,"8 of Diamonds":8,"9 of Diamonds":9,"10 of Diamonds":10,"Jack of Diamonds":10,"Queen of Diamonds":10,"King of Diamonds":10, "Ace of Spades":1,"2 of Spades":2,"3 of Spades":3,"4 of Spades":4,"5 of Spades":5,"6 of Spades":6,"7 of Spades":7,"8 of Spades":8,"9 of Spades":9,"10 of Spades":10,"Jack of Spades":10,"Queen of Spades":10,"King of Spades":10,"Ace of Clubs":1,"2 of Clubs":2,"3 of Clubs":3,"4 of Clubs":4,"5 of Clubs":5,"6 of Clubs":6,"7 of Clubs":7,"8 of Clubs":8,"9 of Clubs":9,"10 of Clubs":10,"Jack of Clubs":10,"Queen of Clubs":10,"King of Clubs":10}
 
     // write your code here
    
@@ -35,7 +35,7 @@ class Deck {
      */
     reset() {
         // write your code here
-        let bool=false;
+        
     return buildCards(true);
     } //End of reset()
 
@@ -179,7 +179,7 @@ function initialDeal() {
         let arr=p1.split(" ");
         if( parseInt(arr[0]) )
         return parseInt(p1);
-        else if((arr[0]=="Ace") || (arr[0]=="King") || (arr[1]=="Queen") || (arr[1]=="Jack")){
+        else if((arr[0]=="Ace") || (arr[0]=="King") || (arr[0]=="Queen") || (arr[0]=="Jack")){
             return 10;
         }
 
@@ -222,8 +222,8 @@ function stand() {
     // flip Dealer cards and compare
     displayCard(card2,true);
     // write your code here
-    let dealerTotal=value(card1)+value(card2);
-    let playerTotal=value(playerCard1)+value(playerCard2);
+     dealerTotal=value(card1)+value(card2);
+     playerTotal=value(playerCard1)+value(playerCard2);
     if(dealerTotal>playerTotal)
     {
         cuteAlert({
@@ -266,7 +266,29 @@ function hit() {
     // Dealing the extra cards that the player requests
 
     // write your code here
+    if(extraCnt==0){
+    playerCard3=deck.deal();
+    displayCard(playerCard3,true);
+    playerTotal+=value(playerCard3);
+    }
+    if(extraCnt==1){
+        playerCard4=deck.deal();
+        displayCard(playerCard4,true);
+        playerTotal+=value(playerCard4);
+    }
+    else{
+        dealButton.style.display = 'none'
+        // Alert - Max. Cards dealed
+        cuteAlert({
+            type: "warning",
+            title: "Sorry...",
+            message: "Max. Cards dealed",
+            buttonText: "OK",
+            img:"warning.svg"
+        })
+    }
     
+
 
     // Dealing new cards 
     // Use conditional block
@@ -284,7 +306,26 @@ function hit() {
     */
 
     // write your code here
-
+    if(playerTotal>21){
+        cuteAlert({
+            type: "Busted",
+            title: "Sorry...",
+            message: "Out of the game",
+            buttonText: "OK",
+            img:"warning.svg"
+        })
+    }
+    else if(playerTotal==21){
+        cuteAlert({
+            type: "success",
+            title: "Superb!!!",
+            message: "Blackjacked !!!",
+            buttonText: "Wohoo !!!",
+            img:"success.svg"
+        }).then(() => {
+            location.reload()  // Load a new game
+        })
+    }
 
     // Checking the total of the player cards before dealing new cards
         // cuteAlert - Player looses the game - as score is more than 21
